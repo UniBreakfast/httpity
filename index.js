@@ -69,9 +69,9 @@ defineProperties(IncomingMessage.prototype, {
   } },
 })
 
-defineProperties(ServerResponse.prototype, {
-  setCookie: {value (name, value, {expire=exports.cookieDefaultExpire,
-    path='/', secure=!exports.dev}={}) {
+defineProperties(assign(ServerResponse.prototype, {
+  setCookie(name, value, {expire=exports.cookieDefaultExpire, path='/',
+    secure=!exports.dev}={}) {
       let cookie = `${name}=${value}; Max-Age=${expire}; Path=${path}`
       cookie = secure ?
         `__Secure-${cookie}; Secure; HttpOnly; SameSite=Strict` : cookie
@@ -83,12 +83,11 @@ defineProperties(ServerResponse.prototype, {
         this.setHeader('set-cookie', cookie)
         return cookie
       }
-    }
   },
-  delCookie: {value (name, path='/', secure=!exports.dev) {
+  delCookie(name, path='/', secure=!exports.dev) {
     this.setCookie(name, '', {expire: -1, path, secure})
-  }},
-  send: {value (body, code, type) {
+  },
+  send(body, code, type) {
     if (code) {
       if (typeof code == 'string') type = code
       else this.statusCode = code
@@ -107,7 +106,8 @@ defineProperties(ServerResponse.prototype, {
       this.end(body)
       return body
     }
-  }},
+  },
+}), {
   code: {set (num) {
     return this.statusCode = num
   }, get () {
