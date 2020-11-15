@@ -1,6 +1,6 @@
 # HTTPity
 
-A small wrapper-module around the built in `http` module. It provides additional utitity getters, setters and methods on request and response objects (they are actually addedt to IncomingMessage and ServerResponse prototypes of course).
+A small wrapper-module around the built in `http` module. It provides additional utitity getters, setters and methods on `request` and `response` objects (they are actually added to `IncomingMessage` and `ServerResponse` prototypes of course).
 
 ## Installation
 ```
@@ -34,25 +34,25 @@ function handle(request, response) {
 
 #### New getters on `request` object (`IncomingMessage.prototype`) are:
 
-[request.cookie]()
-[request.rawBody]()
-[request.body]()
-[request.path]()
-[request.querystring]()
-[request.query]()
+- [request.cookie](https://github.com/UniBreakfast/httpity#requestcookie)
+- [request.rawBody](https://github.com/UniBreakfast/httpity#requestrawbody)
+- [request.body](https://github.com/UniBreakfast/httpity#requestbody)
+- [request.path](https://github.com/UniBreakfast/httpity#requestpath)
+- [request.querystring](https://github.com/UniBreakfast/httpity#requestquerystring)
+- [request.query](https://github.com/UniBreakfast/httpity#requestquery)
 
 #### New methods on `response` object (`ServerResponse.prototype`) are:
 
-[response.setCookie(...)]()
-[response.delCookie(...)]()
-[response.send(...)]()
+- [response.setCookie(...)](https://github.com/UniBreakfast/httpity#responsesetcookiename-value-options)
+- [response.delCookie(...)]()
+- [response.send(...)]()
 
 #### New setters (and some getters) on `response` object (`ServerResponse.prototype`) are:
 
-[response.code]()
-[response.type]()
-[response.path]()
-[response.body]()
+- [response.code]()
+- [response.type]()
+- [response.path]()
+- [response.body]()
 
 Details below
 
