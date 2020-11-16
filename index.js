@@ -30,7 +30,7 @@ const types = {
 }
 
 assign(exports,
-  {dev: !process.env.PORT, cookieDefaultExpire: 86400*3, autoEnd: false})
+  {dev: !process.env.PORT, cookieDefaultExpire: 86400*3, autoEnd: true})
 
 defineProperties(IncomingMessage.prototype, {
   cookie: { get () {
@@ -131,7 +131,5 @@ defineProperties(assign(ServerResponse.prototype, {
       data = stringify(data)
     this[exports.autoEnd ? 'end' : 'write'](data)
     return data
-  }, get () {
-
-  }}
+  }, get () { return this.givenBody}},
 })
