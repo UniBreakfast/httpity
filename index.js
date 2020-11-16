@@ -1,6 +1,7 @@
 const {IncomingMessage, ServerResponse} = exports =
   module.exports = require('http')
 const {decode} = require('querystring')
+const {createReadStream} = require('fs')
 const {parse, stringify} = JSON,  {error} = console
 const {assign, defineProperties, fromEntries, setPrototypeOf} = Object
 
@@ -30,7 +31,7 @@ const types = {
 }
 
 assign(exports,
-  {dev: !process.env.PORT, cookieDefaultExpire: 86400*3, autoEnd: true})
+  {secure: false, cookieDefaultExpire: 86400*3, autoEnd: true})
 
 defineProperties(IncomingMessage.prototype, {
   cookie: { get () {
@@ -71,7 +72,7 @@ defineProperties(IncomingMessage.prototype, {
 
 defineProperties(assign(ServerResponse.prototype, {
   setCookie(name, value, {expire=exports.cookieDefaultExpire, path='/',
-    secure=!exports.dev}={}) {
+    secure=exports.secure}={}) {
       let cookie = `${name}=${value}; Max-Age=${expire}; Path=${path}`
       cookie = secure ?
         `__Secure-${cookie}; Secure; HttpOnly; SameSite=Strict` : cookie
@@ -84,7 +85,7 @@ defineProperties(assign(ServerResponse.prototype, {
         return cookie
       }
   },
-  delCookie(name, path='/', secure=!exports.dev) {
+  delCookie(name, path='/', secure=exports.secure) {
     this.setCookie(name, '', {expire: -1, path, secure})
   },
   send(body, code, type) {
@@ -109,20 +110,20 @@ defineProperties(assign(ServerResponse.prototype, {
   },
 }), {
   code: {set (num) {
-    return this.statusCode = num
-  }, get () {
-    return this.statusCode
-  }},
+    this.statusCode = num
+  }, get () { return this.statusCode }},
   type: {set (ext) {
     if (this.type) throw error('type was already set')
-    if (!types[ext]) throw error('unknown extension')
-    this.setHeader('content-type', types[ext])
-  }, get () {
-    if (this.hasHeader('content-type')) return this.getHeader('content-type')
-  }},
+    if (ext.includes('.')) {
+      const extMatch = path.match(/\.([^\/.]*)$/)
+      ext = extMatch && extMatch[1]
+    }
+    if (types[ext]) this.setHeader('content-type', types[ext])
+  }, get () { return this.getHeader('content-type') }},
   path: {set (path) {
-    const extMatch = path.match(/\.([^\/]*)$/)
-    return this.type = extMatch && extMatch[1]
+    const extMatch = path.match(/\.([^\/.]*)$/)
+    this.type = extMatch && extMatch[1]
+    createReadStream(path).pipe(this)
   }},
   body: {set (data) {
     if (this.givenBody) throw error('body was already set')
@@ -130,6 +131,5 @@ defineProperties(assign(ServerResponse.prototype, {
     if (!(typeof data == 'string' || data instanceof Buffer))
       data = stringify(data)
     this[exports.autoEnd ? 'end' : 'write'](data)
-    return data
-  }, get () { return this.givenBody}},
+  }, get () { return this.givenBody }},
 })

@@ -114,7 +114,7 @@ Again, previously decoded query data is stored into `request.parsedQuery` and is
 Adds a `set-cookie` header to the `response`. Accepts following `options`
   - `expire` : number of seconds until cookie expires (also known as `Max-Age`), defaults to `http.cookieDefaultExpire` (or `httpity.cookieDefaultExpire` if you imported it like that), equals to `86400*3` (3 days) if you did not change it.
   - `path` : a scope-path on site for cookie to work in, defaults to `'/'`.
-  - `secure` : boolean, if `true` adds a `__Secure-` prefix before cookie name and `Secure; HttpOnly; SameSite=Strict` at the end of the cookie-header, supposed to be used only via `https`. This is used in production (had Heroku in mind) by default if `process.env.PORT` is not empty and you didn't force the dev-mode by setting `httpity.dev = true`.
+  - `secure` : boolean, if `true` adds a `__Secure-` prefix before cookie name and `Secure; HttpOnly; SameSite=Strict` at the end of the cookie-header, supposed to be used only via `https`. This is supposed to be used in production (I had Heroku in mind, as it does provide an https-connection for http-servers), to change the default set `httpity.secure = true`.
 Returns the cookie-string that would be sent to the client as the `set-cookie` header.
 
 ### `response.delCookie(name, ?path='/', ?secure=!httpity.dev)`
@@ -137,11 +137,11 @@ An alias for `response.statusCode`, works both like a setter and a getter.
 
 ### `response.type`
 
-This setter takes an extension string like `svg` and adds a corresponding MIME type to the `content-type` header, like `image/svg+xml; charset=utf-8` for example. As a getter it will show the current `content-type` header.
+This setter takes an extension string like `svg` and adds a corresponding MIME type to the `content-type` header, like `image/svg+xml; charset=utf-8` for example. If a whole path string provided instead it will try to extract an extension and use it. As a getter it will show the current `content-type` header.
 
 ### `response.path`
 
-This setter takes a `filename` or `filepath` string, extracts the extension part from it and uses it to set the `content-type` header via the `response.type` setter.
+This setter takes a `filename` or `filepath` string, extracts the extension part from it and uses it to set the `content-type` header via the `response.type` setter. And then it'll try to read the file if one found by that path and pipe it to the client.
 
 ### `response.body`
 
