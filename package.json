@@ -1,6 +1,6 @@
 {
   "name": "httpity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A wrapper-module around the built in http module, it provides additional utitity getters, setters and methods on request and response objects (IncomingMessage and ServerResponse prototypes that are)",
   "main": "index.js",
   "type": "commonjs",
@@ -14,5 +14,13 @@
     "file-types"
   ],
   "author": "Mykhailo \"Ninin\" Velykoselskyi",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UniBreakfast/httpity.git",
+    "bugs": {
+      "url": "https://github.com/UniBreakfast/httpity/issues"
+    },
+    "homepage": "https://www.npmjs.com/package/httpity"
+  }
 }

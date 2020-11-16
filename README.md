@@ -1,6 +1,7 @@
 <!-- https://github.com/UniBreakfast/httpity/blob/master/README.md -->
 # HTTPity
 
+[npm link](https://www.npmjs.com/package/httpity)
 A small wrapper-module around the built in `http` module. It provides additional utitity getters, setters and methods on `request` and `response` objects (they are actually added to `IncomingMessage` and `ServerResponse` prototypes of course).
 
 ## Installation
