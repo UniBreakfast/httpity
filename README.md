@@ -2,7 +2,8 @@
 # HTTPity
 
 [npm link](https://www.npmjs.com/package/httpity)
-A small wrapper-module around the built in `http` module. It provides additional utitity getters, setters and methods on `request` and `response` objects (they are actually added to `IncomingMessage` and `ServerResponse` prototypes of course).
+
+It's a small wrapper-module around the built in `http` module. It provides additional utitity getters, setters and methods on `request` and `response` objects (they are actually added to `IncomingMessage` and `ServerResponse` prototypes of course). It is great with passing strings or JSON-objects, handling cookies, querystrings and MIME types.
 
 ## Installation
 ```
@@ -25,7 +26,7 @@ import http from 'httpity'
 
 ## Usage
 
-So just like with normal `http` module you would create and run a server and see the advantages of `httpity` inside the `handle(request, response)` function
+So just like with normal `http` module you would create and run a server and see the advantages of `httpity` inside the `handle(request, response)` function.
 
 ```js
 http.createServer(handle).listen(port)
@@ -56,7 +57,7 @@ function handle(request, response) {
 - [`response.path`](#responsepath)
 - [`response.body`](#responsebody)
 
-Details below
+Details below.
 
 ### `request.cookie`
 
