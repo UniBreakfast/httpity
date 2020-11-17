@@ -43,6 +43,11 @@ function handle(request, response) {
 - [`request.path`](#requestpath-and-requestquerystring)
 - [`request.querystring`](#requestpath-and-requestquerystring)
 - [`request.query`](#requestquery)
+- [`request.data`](#requestdata)
+
+### New method on `request` object (`ServerResponse.prototype`) is:
+
+- [`request.compose(...)`](#requestcomposeprops)
 
 ### New methods on `response` object (`ServerResponse.prototype`) are:
 
@@ -65,7 +70,7 @@ It returns the object with cookies that came from the client as `{key1: 'value1"
 
 ### `request.rawBody`
 
-It returns the promise so in order to get it use
+It returns a promise so in order to get it use
 
 ```js
 request.rawBody.then(str => console.log(str))
@@ -76,7 +81,7 @@ Again, previously collected data is stored into `request.receivedData` and is re
 
 ### `request.body`
 
-This one treats received data as JSON-stringified data and parses it for you automatically. It returns the promise so in order to get it use
+This one treats received data as JSON-stringified data and parses it for you automatically. It returns a promise so in order to get it use
 
 ```js
 request.body.then(data => console.log(data))
@@ -108,6 +113,14 @@ console.log(request.query)
 // -> {name: 'Alex', age: 23, rank: 'rookie'}
 ```
 Again, previously decoded query data is stored into `request.parsedQuery` and is returned if `request.query` is asked more than once.
+
+### `request.data`
+
+Provides composed data from both `request.body` and `request.query` (data from body overrides the data from query). Returns a promise. Under the hood it uses `request.compose()` with no arguments to compose it.
+
+### `request.compose(?props)`
+
+Provides composed data from both `request.body` and `request.query` (data from body overrides the data from query). Returns a promise. If `props` provided returns only the required fields of data. And `props` can be an object or an array. If it's an object it will keep the values for properties that are missing in the `response` loadout. If it's an array with propery names than for fields missing in `response` loadout values will be empty strings `''`. Promise for once composed `data` object of all values in body and query will be saved at `response.composedData` and used under the hood if `request.data` or `request.compose()` (without arguments) is used again.
 
 ### `response.setCookie(name, value, ?options={})`
 

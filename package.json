@@ -1,6 +1,6 @@
 {
   "name": "httpity",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A wrapper-module around the built in http module, it provides additional utitity getters, setters and methods on request and response objects (IncomingMessage and ServerResponse prototypes that are)",
   "main": "index.js",
   "type": "commonjs",

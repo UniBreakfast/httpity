@@ -64,10 +64,28 @@ defineProperties(IncomingMessage.prototype, {
     return urlQuery
   } },
   query: { get () {
-    if (this.parsedQuery) return this.parsedQuery
-    return this.parsedQuery =
-      setPrototypeOf(decode(this.querystring), Object.prototype)
+    return this.parsedQuery || (this.parsedQuery =
+      setPrototypeOf(decode(this.querystring), Object.prototype))
   } },
+  compose: { async value (props) {
+    if (!props) {
+      const data = await this.composedData
+      if (data) return data
+      const body = await this.body,  {query} = this
+      return this.composedData =
+        Array.isArray(body) ? assign(body, query) : assign(query, body)
+    }
+    const data = !Array.isArray(props) ? parse(stringify(props))
+      : fromEntries(props.map(key => [key, '']))
+      const allData = await this.composedData || await this.compose()
+    for (const key in data) {
+      if (allData[key] !== undefined) data[key] = allData[key]
+    }
+    return data
+  }},
+  data: { async get () {
+    return await this.composedData || this.compose()
+  }},
 })
 
 defineProperties(assign(ServerResponse.prototype, {
