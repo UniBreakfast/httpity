@@ -37,7 +37,8 @@ defineProperties(IncomingMessage.prototype, {
   cookie: { get () {
     const {parsedCookie, headers: {cookie}} = this
     return parsedCookie || (this.parsedCookie = cookie &&
-      fromEntries(cookie.split('; ').map(pair => pair.split('='))) || {})
+      fromEntries(cookie.split('; ').map(pair =>
+        pair.replace('__Secure-', '').split('='))) || {})
   } },
   rawBody: { async get () {
     if (this.receivedData) return this.receivedData

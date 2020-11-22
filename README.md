@@ -130,7 +130,7 @@ Adds a `set-cookie` header to the `response`. Accepts following `options`
   - `secure` : boolean, if `true` adds a `__Secure-` prefix before cookie name and `Secure; HttpOnly; SameSite=Strict` at the end of the cookie-header, supposed to be used only via `https`. This is supposed to be used in production (I had Heroku in mind, as it does provide an https-connection for http-servers), to change the default set `httpity.secure = true`.
 Returns the cookie-string that would be sent to the client as the `set-cookie` header.
 
-### `response.delCookie(name, ?path='/', ?secure=!httpity.dev)`
+### `response.delCookie(name, ?path='/', ?secure=!httpity.secure)`
 
 Adds a `set-cookie` header to the `response` with intent to delete said cookie on the client by setting its value to empty string and max age less than zero. Parameters `path` and `secure` here work exactly the same way as do the correspondingly named options in the previous `response.setCookie` method and actually it is used here under the hood.
 
