@@ -45,7 +45,7 @@ function handle(request, response) {
 - [`request.query`](#requestquery)
 - [`request.data`](#requestdata)
 
-### New method on `request` object (`ServerResponse.prototype`) is:
+### New method on `request` object (`IncomingMessage.prototype`) is:
 
 - [`request.compose(...)`](#requestcomposeprops)
 
