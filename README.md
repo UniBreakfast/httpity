@@ -154,7 +154,7 @@ This setter takes an extension string like `svg` and adds a corresponding MIME t
 
 ### `response.path`
 
-This setter takes a `filename` or `filepath` string, extracts the extension part from it and uses it to set the `content-type` header via the `response.type` setter. And then it'll try to read the file if one found by that path and pipe it to the client.
+This setter takes a `filename` or `filepath` string, extracts the extension part from it and uses it to set the `content-type` header via the `response.type` setter. And then it'll try to read the file if one found by that path and pipe it to the client. If not response will emit 'error', so you can handle it.
 
 ### `response.body`
 
