@@ -120,7 +120,7 @@ Provides composed data from both `request.body` and `request.query` (data from b
 
 ### `request.compose(?props)`
 
-Provides composed data from both `request.body` and `request.query` (data from body overrides the data from query). Returns a promise. If `props` provided returns only the required fields of data. And `props` can be an object or an array. If it's an object it will keep the values for properties that are missing in the `response` loadout. If it's an array with propery names than for fields missing in `response` loadout values will be empty strings `''`. Promise for once composed `data` object of all values in body and query will be saved at `response.composedData` and used under the hood if `request.data` or `request.compose()` (without arguments) is used again.
+Provides composed data from both `request.body` and `request.query` (data from body overrides the data from query). Returns a promise. If `props` provided returns only the required fields of data. And `props` can be an object or an array. If it's an object it will keep the values for properties that are missing in the `response` loadout. If it's an array with property names than for fields missing in `response` loadout values will be empty strings `''`. Promise for once composed `data` object of all values in body and query will be saved at `response.composedData` and used under the hood if `request.data` or `request.compose()` (without arguments) is used again.
 
 ### `response.setCookie(name, value, ?options={})`
 
