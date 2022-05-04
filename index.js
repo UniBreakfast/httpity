@@ -132,17 +132,20 @@ defineProperties(assign(ServerResponse.prototype, {
     this.statusCode = num
   }, get () { return this.statusCode }},
   type: {set (ext) {
-    if (this.type) throw error('type was already set')
-    if (ext.includes('.')) {
+    // if (this.type) throw error('type was already set')
+    if (ext == '/') ext = 'html'
+    else if (ext?.includes('.')) {
       const extMatch = path.match(/\.([^\/.]*)$/)
       ext = extMatch && extMatch[1]
     }
     if (types[ext]) this.setHeader('content-type', types[ext])
+
   }, get () { return this.getHeader('content-type') }},
   path: {set (path) {
     const extMatch = path.match(/\.([^\/.]*)$/)
     this.type = extMatch && extMatch[1]
-    createReadStream(path).pipe(this)
+    createReadStream(path).on('error', err => this.emit('error', err))
+      .pipe(this)
   }},
   body: {set (data) {
     if (this.givenBody) throw error('body was already set')
