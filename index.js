@@ -151,7 +151,12 @@ defineProperties(assign(ServerResponse.prototype, {
     if (this.givenBody) throw error('body was already set')
     this.givenBody = data
     if (!(typeof data == 'string' || data instanceof Buffer))
-      data = stringify(data)
+      try {
+        data = stringify(data)
+      } catch (error) {
+        delete this.givenBody
+        throw new ReferenceError('body must be stringifiable or string')
+      }
     this[exports.autoEnd ? 'end' : 'write'](data)
   }, get () { return this.givenBody }},
 })
