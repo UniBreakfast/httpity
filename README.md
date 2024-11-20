@@ -1,4 +1,4 @@
-# HTTPity
+# [HTTPity](https://github.com/UniBreakfast/httpity)
 
 [npm link](https://www.npmjs.com/package/httpity)
 
